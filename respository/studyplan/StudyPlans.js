@@ -108,27 +108,18 @@ async function addNewStudyPlan(
       return resolve({
         statusCode: 200,
         returnCode: 1,
-        message: 'Create Curriculum Successfuly:',
+        message: 'Create StudyPlan Successfuly:',
         id: results1.insertId,
       });
     });
   });
 }
 
-async function editStudyPlan(
-  study_plan_id,
-  curriculum_id,
-  study_plan_name,
-  study_plan_version,
-  total_credit
-) {
+async function editStudyPlan(study_plan_id, study_plan_name) {
   var pool = mysql.createPool(config);
   var post = {
     study_plan_id: study_plan_id,
-    curriculum_id: curriculum_id,
     study_plan_name: study_plan_name,
-    study_plan_version: study_plan_version,
-    total_credit: total_credit,
   };
   console.log('post is: ', post);
 
@@ -136,11 +127,7 @@ async function editStudyPlan(
 
   return new Promise((resolve, reject) => {
     Query = `UPDATE ${table} 
-    SET study_plan_id='${study_plan_id}',
-    curriculum_id='${curriculum_id}',
-    study_plan_name='${study_plan_name}',
-    study_plan_version='${study_plan_version}',
-    total_credit='${total_credit}'
+    SET study_plan_name='${study_plan_name}'
     WHERE study_plan_id=${study_plan_id}`;
 
     pool.query(Query, post, function (error, results1, fields) {
@@ -183,10 +170,41 @@ async function deleteStudyPlan(study_plan_id) {
   });
 }
 
+async function updataTotalCredit(study_plan_id, total_credit) {
+  var pool = mysql.createPool(config);
+  var post = {
+    study_plan_id: study_plan_id,
+    total_credit: total_credit,
+  };
+  console.log('post is: ', post);
+
+  var Query;
+
+  return new Promise((resolve, reject) => {
+    Query = `UPDATE ${table} 
+    SET total_credit='${total_credit}'
+    WHERE study_plan_id=${study_plan_id}`;
+
+    pool.query(Query, post, function (error, results1, fields) {
+      if (error) {
+        return resolve(reject(error));
+      }
+      pool.end();
+      return resolve({
+        statusCode: 200,
+        returnCode: 1,
+        message: `updata StudyPlan - TotalCredit ById :${study_plan_id}`,
+        data: results1,
+      });
+    });
+  });
+}
+
 module.exports.StudyPlansRepo = {
   getAllStudyPlans: getAllStudyPlans,
   getStudyPlanById: getStudyPlanById,
   addNewStudyPlan: addNewStudyPlan,
   editStudyPlan: editStudyPlan,
   deleteStudyPlan: deleteStudyPlan,
+  updataTotalCredit: updataTotalCredit,
 };

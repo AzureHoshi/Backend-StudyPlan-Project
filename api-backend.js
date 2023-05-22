@@ -1934,20 +1934,11 @@ const init = async () => {
     handler: async function (request, reply) {
       try {
         // body requests
-        const {
-          study_plan_id,
-          curriculum_id,
-          study_plan_name,
-          study_plan_version,
-          total_credit,
-        } = request.payload;
+        const { study_plan_id, study_plan_name } = request.payload;
 
         const responsedata = await StudyPlans.StudyPlansRepo.editStudyPlan(
           study_plan_id,
-          curriculum_id,
-          study_plan_name,
-          study_plan_version,
-          total_credit
+          study_plan_name
         );
         if (responsedata.error) {
           return responsedata.errMessage;
@@ -1981,6 +1972,40 @@ const init = async () => {
         const { study_plan_id } = request.payload;
         const responsedata = await StudyPlans.StudyPlansRepo.deleteStudyPlan(
           study_plan_id
+        );
+        if (responsedata.error) {
+          return responsedata.errMessage;
+        } else {
+          return responsedata;
+        }
+      } catch (err) {
+        server.log(['error', 'home'], err);
+        return err;
+      }
+    },
+  });
+
+  server.route({
+    method: 'POST',
+    path: '/api/v1/studyplan_updatacredit',
+    config: {
+      // config for multi body request
+      payload: {
+        multipart: true,
+      },
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-width'],
+      },
+    },
+    handler: async function (request, reply) {
+      try {
+        // body requests
+        const { study_plan_id, total_credit } = request.payload;
+
+        const responsedata = await StudyPlans.StudyPlansRepo.updataTotalCredit(
+          study_plan_id,
+          total_credit
         );
         if (responsedata.error) {
           return responsedata.errMessage;
