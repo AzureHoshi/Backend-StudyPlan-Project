@@ -83,7 +83,69 @@ async function getSubStudyBySemesterYear(sub_study_semester, sub_study_year) {
   });
 }
 
+async function addSubStudy(
+  study_plan_id,
+  subject_id,
+  sub_study_semester,
+  sub_study_year
+) {
+  var pool = mysql.createPool(config);
+  var post = {
+    study_plan_id: study_plan_id,
+    subject_id: subject_id,
+    sub_study_semester: sub_study_semester,
+    sub_study_year: sub_study_year,
+  };
+  console.log('post is: ', post);
+
+  var Query;
+
+  return new Promise((resolve, reject) => {
+    Query = `INSERT INTO ${table} (study_plan_id, subject_id, sub_study_semester, sub_study_year) 
+    VALUES ('${study_plan_id}', '${subject_id}', '${sub_study_semester}', '${sub_study_year}')`;
+
+    pool.query(Query, post, function (error, results1, fields) {
+      if (error) {
+        return resolve(reject(error));
+      }
+      pool.end();
+      return resolve({
+        statusCode: 200,
+        returnCode: 1,
+        message: 'Create SubStudy Successfuly:',
+        id: results1.insertId,
+      });
+    });
+  });
+}
+
+async function deleteSubStudy(sub_study_id) {
+  var pool = mysql.createPool(config);
+
+  var Query;
+  return new Promise((resolve, reject) => {
+    Query = `UPDATE ${table} SET is_deleted='1' WHERE sub_study_id = '${sub_study_id}'`;
+
+    console.log('Query1 is: ', Query);
+
+    pool.query(Query, function (error, results1, fields) {
+      if (error) {
+        return resolve(reject(error));
+      }
+      pool.end();
+      return resolve({
+        statusCode: 200,
+        returnCode: 1,
+        message: `SubStudy id = ${sub_study_id} is deleted!`,
+        data: results1,
+      });
+    });
+  });
+}
+
 module.exports.SubStudyRepo = {
   getSubStudyById: getSubStudyById,
   getSubStudyBySemesterYear: getSubStudyBySemesterYear,
+  addSubStudy: addSubStudy,
+  deleteSubStudy: deleteSubStudy,
 };

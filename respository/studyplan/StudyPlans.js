@@ -149,7 +149,6 @@ async function deleteStudyPlan(study_plan_id) {
   var pool = mysql.createPool(config);
 
   var Query;
-
   return new Promise((resolve, reject) => {
     Query = `UPDATE ${table} SET is_deleted = '1' WHERE study_plan_id = '${study_plan_id}'`;
 
