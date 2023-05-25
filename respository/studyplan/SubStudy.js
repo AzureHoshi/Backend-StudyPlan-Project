@@ -18,7 +18,7 @@ async function getSubStudyById(study_plan_id) {
     Query = `SELECT * FROM ${table} 
         INNER JOIN study_plans ON ${table}.study_plan_id = study_plans.study_plan_id
         INNER JOIN subjects ON ${table}.subject_id = subjects.subject_id 
-        WHERE sub_study.study_plan_id = ${study_plan_id} AND ${table}.is_deleted IS NULL OR ${table}.is_deleted = 0`;
+        WHERE sub_study.study_plan_id = ${study_plan_id} AND ${table}.is_deleted = 0 OR ${table}.is_deleted = 0`;
 
     console.log('Query1 is: ', Query);
 
@@ -54,7 +54,7 @@ async function getSubStudyBySemesterYear(sub_study_semester, sub_study_year) {
     Query = `SELECT * FROM ${table} 
         INNER JOIN study_plans ON ${table}.study_plan_id = study_plans.study_plan_id
         INNER JOIN subjects ON ${table}.subject_id = subjects.subject_id 
-        WHERE sub_study_year = ${sub_study_year} AND sub_study_semester = ${sub_study_semester} AND ${table}.is_deleted IS NULL 
+        WHERE sub_study_year = ${sub_study_year} AND sub_study_semester = ${sub_study_semester} AND ${table}.is_deleted = 0 
         OR sub_study_year = ${sub_study_year} AND sub_study_semester = ${sub_study_semester} AND ${table}.is_deleted = 0
         ORDER BY sub_study_id  DESC`;
 

@@ -17,7 +17,7 @@ async function getAllStudyPlans() {
     Query = `SELECT * FROM ${table} 
         INNER JOIN curriculums ON ${table}.curriculum_id = curriculums.curriculum_id
         INNER JOIN student_cur_group ON curriculums.student_cur_group_id = student_cur_group.student_cur_group_id
-        WHERE ${table}.is_deleted IS NULL`;
+        WHERE ${table}.is_deleted = 0`;
 
     console.log('Query1 is: ', Query);
 
@@ -51,7 +51,7 @@ async function getStudyPlanById(study_plan_id) {
     Query = `SELECT * FROM ${table} 
         INNER JOIN curriculums ON ${table}.curriculum_id = curriculums.curriculum_id
         INNER JOIN student_cur_group ON curriculums.student_cur_group_id = student_cur_group.student_cur_group_id
-        WHERE ${table}.study_plan_id = ${study_plan_id} AND ${table}.is_deleted IS NULL`;
+        WHERE ${table}.study_plan_id = ${study_plan_id} AND ${table}.is_deleted = 0`;
 
     console.log('Query1 is: ', Query);
 
