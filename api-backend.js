@@ -70,6 +70,7 @@ const init = async () => {
     },
   });
 
+  // สำหรับ BackOffice API
   RoutesBackOfficeCurriculums(server);
   RoutesBackOfficeSubjects(server);
   RoutesBackOfficeRelations(server);
