@@ -1,8 +1,4 @@
 const Curriculum = require('../../respository/studyplan/Curriculums');
-const Subjects = require('../../respository/studyplan/Subjects.js');
-const Relations = require('../../respository/studyplan/Relations.js');
-const StudyPlans = require('../../respository/studyplan/StudyPlans.js');
-const SubStudy = require('../../respository/studyplan/SubStudy.js');
 
 module.exports = (server) => {
   // /api/v1/curriculum
