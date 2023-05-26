@@ -20,7 +20,7 @@ async function getAllCurriculm() {
     Query = `SELECT * FROM ${table} 
         INNER JOIN ${join_faculty_table} ON ${table}.faculty_id = ${join_faculty_table}.faculty_id
         INNER JOIN ${join_cur_group_table} ON ${table}.student_cur_group_id = ${join_cur_group_table}.student_cur_group_id
-        WHERE ${table}.is_deleted 0 ORDER BY ${table}.curriculum_year DESC`;
+        WHERE ${table}.is_deleted = 0 ORDER BY ${table}.curriculum_year DESC`;
 
     console.log('Query1 is: ', Query);
 
@@ -268,7 +268,7 @@ async function searchFaculty(text, column) {
   var pool = mysql.createPool(config);
 
   var Query = `SELECT * FROM faculty
-        WHERE is_deleted 0 AND ${column} LIKE '%${text}%' ORDER BY faculty_id DESC`;
+        WHERE is_deleted = 0 AND ${column} LIKE '%${text}%' ORDER BY faculty_id DESC`;
 
   console.log(`Query is: `, Query);
 
@@ -417,7 +417,7 @@ async function searchGroup(text, column) {
   var pool = mysql.createPool(config);
 
   var Query = `SELECT * FROM student_cur_group
-        WHERE is_deleted 0 AND ${column} LIKE '%${text}%' ORDER BY student_cur_group_id DESC`;
+        WHERE is_deleted = 0 AND ${column} LIKE '%${text}%' ORDER BY student_cur_group_id DESC`;
 
   console.log(`Query is: `, Query);
 

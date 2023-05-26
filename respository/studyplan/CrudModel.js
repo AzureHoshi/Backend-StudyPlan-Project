@@ -10,7 +10,7 @@ var connection = mysql.createPool({
 
 function SelectAll(table) {
   // var Query = `SELECT * FROM ${table} WHERE is_deleted IS NULL LIMIT ${size} OFFSET ${skip}`
-  var Query = `SELECT * FROM ${table} WHERE is_deleted IS NULL `;
+  var Query = `SELECT * FROM ${table} WHERE is_deleted = 0 `;
   return Query;
 }
 function SelectById(table, column_id, id) {
