@@ -22,6 +22,7 @@ const RoutesBackOfficeSubjects = require('./routes/studyplans/BackOfficeSubjects
 const RoutesBackOfficeRelations = require('./routes/studyplans/BackOfficeRelations');
 const RoutesBackOfficeStudyPlans = require('./routes/studyplans/BackOfficeStudyPlans');
 const RoutesBackOfficeSubStudy = require('./routes/studyplans/BackOfficeSubStudy');
+const FrontEndStudent = require('./routes/studyplans/FrontEndStudent');
 
 //---------------- Websocket -----------------------------
 const hapiPort = 3200;
@@ -76,6 +77,7 @@ const init = async () => {
   RoutesBackOfficeRelations(server);
   RoutesBackOfficeStudyPlans(server);
   RoutesBackOfficeSubStudy(server);
+  FrontEndStudent(server);
 
   await server.start();
   console.log('Server running on %s', server.info.uri);
