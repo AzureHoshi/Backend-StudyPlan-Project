@@ -40,26 +40,24 @@ async function getStatusFeedback(stu_id) {
   return new Promise((resolve, reject) => {
     Query = `SELECT stu_status_feedback FROM ${table} WHERE stu_id = ${stu_id};`;
 
-    console.log(Query);
-
     pool.query(Query, function (error, results1, fields) {
       if (error) {
         return resolve(reject(error));
       }
-      if (results1.stu_status_feedback !== 1) {
+      if (results1[0].stu_status_feedback === 1) {
         return resolve({
           statusCode: 200,
           returnCode: 1,
-          message: `Get Student StatusFeedback successfully`,
-          statusFeedback: '1',
+          message: `get Student StatusFeedback successfully`,
+          statusFeedback: 1,
         });
       }
       pool.end();
       return resolve({
         statusCode: 200,
         returnCode: 1,
-        message: `Get Student StatusFeedback successfully`,
-        statusFeedback: '0',
+        message: `get Student StatusFeedback successfully`,
+        statusFeedback: 0,
       });
     });
   });
