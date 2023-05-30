@@ -55,8 +55,7 @@ async function getSubStudyBySemesterYear(sub_study_semester, sub_study_year) {
         INNER JOIN study_plans ON ${table}.study_plan_id = study_plans.study_plan_id
         INNER JOIN subjects ON ${table}.subject_id = subjects.subject_id 
         WHERE sub_study_year = ${sub_study_year} AND sub_study_semester = ${sub_study_semester} AND ${table}.is_deleted = 0 
-        OR sub_study_year = ${sub_study_year} AND sub_study_semester = ${sub_study_semester} AND ${table}.is_deleted = 0
-        ORDER BY sub_study_id  DESC`;
+        OR sub_study_year = ${sub_study_year} AND sub_study_semester = ${sub_study_semester} AND ${table}.is_deleted = 0`;
 
     console.log('Query1 is: ', Query);
 
@@ -83,12 +82,7 @@ async function getSubStudyBySemesterYear(sub_study_semester, sub_study_year) {
   });
 }
 
-async function addSubStudy(
-  study_plan_id,
-  subject_id,
-  sub_study_semester,
-  sub_study_year
-) {
+async function addSubStudy(study_plan_id, subject_id, sub_study_semester, sub_study_year) {
   var pool = mysql.createPool(config);
   var post = {
     study_plan_id: study_plan_id,
