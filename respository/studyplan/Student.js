@@ -14,7 +14,7 @@ async function insertFeedback(values) {
   var pool = mysql.createPool(config);
 
   return new Promise((resolve, reject) => {
-    Query = `INSERT INTO students_feedback (stu_code, feedback_id, sf_answer) VALUES ?`;
+    Query = `INSERT INTO students_feedback (student_id, feedback_id, sf_answer) VALUES ?`;
 
     console.log(Query);
 
@@ -140,12 +140,12 @@ async function getAnswerQuestionSurvey(interest_question_id) {
   });
 }
 
-async function getStudentAnswer(values) {
+async function insertStudentAnswer(values) {
   var Query;
   var pool = mysql.createPool(config);
 
   return new Promise((resolve, reject) => {
-    Query = `INSERT INTO students_feedback (student_id, feedback_id, sf_answer) VALUES ?`;
+    Query = `INSERT INTO student_survey_answer (student_id, interest_question_id, interest_answers_id) VALUES ?`;
 
     console.log(Query);
 
@@ -157,7 +157,7 @@ async function getStudentAnswer(values) {
       return resolve({
         statusCode: 200,
         returnCode: 1,
-        message: `get Answer For Question successfully`,
+        message: `insert Student Survey Answers successfully`,
         data: results1,
       });
     });
@@ -170,5 +170,5 @@ module.exports.StudentRepo = {
   updatedStatusFeedback: updatedStatusFeedback,
   getQuestionSurvey: getQuestionSurvey,
   getAnswerQuestionSurvey: getAnswerQuestionSurvey,
-  getStudentAnswer: getStudentAnswer,
+  insertStudentAnswer: insertStudentAnswer,
 };

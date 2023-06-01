@@ -51,7 +51,7 @@ module.exports = (server) => {
     handler: async function (request, reply) {
       try {
         const data = request.payload; // รับค่าจาก body ของคำขอ
-        const values = data.map((item) => [item.stu_code, item.feedback_id, item.sf_answer]);
+        const values = data.map((item) => [item.student_id, item.feedback_id, item.sf_answer]);
         console.log(data);
 
         const responsedata = await student.StudentRepo.insertFeedback(values);
@@ -155,7 +155,7 @@ module.exports = (server) => {
         // const { student_id, feedback_id, feedback_answer } = request.payload;
         const { stu_code } = request.payload;
 
-        console.log(stu_code);
+        console.log('student_id: ', stu_code);
         const responsedata = await student.StudentRepo.getQuestionSurvey(stu_code);
         if (responsedata.error) {
           return responsedata.errMessage;
@@ -204,37 +204,35 @@ module.exports = (server) => {
   });
 
   // /api/v1/student_answer
-  // server.route({
-  //   method: 'POST',
-  //   path: '/api/v1/student_answers',
-  //   config: {
-  //     // config for multi body request
-  //     payload: {
-  //       multipart: true,
-  //     },
-  //     cors: {
-  //       origin: ['*'],
-  //       additionalHeaders: ['cache-control', 'x-requested-width'],
-  //     },
-  //   },
-  //   handler: async function (request, reply) {
-  //     try {
-  //       // body requests
-  //       // const { student_id, feedback_id, feedback_answer } = request.payload;
-  //       const data = request.payload; // รับค่าจาก body ของคำขอ
-  //       const values = data.map((item) => [item.student_id, item.interest_question_id, item.ssa_answer]);
-  //       console.log(values);
+  server.route({
+    method: 'POST',
+    path: '/api/v1/student_answers',
+    config: {
+      // config for multi body request
+      payload: {
+        multipart: true,
+      },
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-width'],
+      },
+    },
+    handler: async function (request, reply) {
+      try {
+        const data = request.payload; // รับค่าจาก body ของคำขอ
+        const values = data.map((item) => [item.student_id, item.interest_question_id, item.interest_answers_id]);
+        console.log(values);
 
-  //       const responsedata = await student.StudentRepo.getStudentAnswer(values);
-  //       if (responsedata.error) {
-  //         return responsedata.errMessage;
-  //       } else {
-  //         return responsedata;
-  //       }
-  //     } catch (err) {
-  //       server.log(['error', 'home'], err);
-  //       return err;
-  //     }
-  //   },
-  // });
+        const responsedata = await student.StudentRepo.insertStudentAnswer(values);
+        if (responsedata.error) {
+          return responsedata.errMessage;
+        } else {
+          return responsedata;
+        }
+      } catch (err) {
+        server.log(['error', 'home'], err);
+        return err;
+      }
+    },
+  });
 };
