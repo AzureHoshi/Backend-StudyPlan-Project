@@ -50,13 +50,11 @@ module.exports = (server) => {
     },
     handler: async function (request, reply) {
       try {
-        // body requests
-        // const { student_id, feedback_id, feedback_answer } = request.payload;
         const data = request.payload; // รับค่าจาก body ของคำขอ
-        const values = data.map((item) => [item.student_id, item.feedback_id, item.sf_answer]);
-        console.log(values);
+        const values = data.map((item) => [item.stu_code, item.feedback_id, item.sf_answer]);
+        console.log(data);
 
-        const responsedata = await student.StudentRepo.getFeedback(values);
+        const responsedata = await student.StudentRepo.insertFeedback(values);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -87,10 +85,10 @@ module.exports = (server) => {
       try {
         // body requests
         // const { student_id, feedback_id, feedback_answer } = request.payload;
-        const { stu_id } = request.payload;
+        const { stu_code } = request.payload;
 
-        console.log(stu_id);
-        const responsedata = await student.StudentRepo.getStatusFeedback(stu_id);
+        console.log('stu_code: ', stu_code);
+        const responsedata = await student.StudentRepo.getStatusFeedback(stu_code);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -121,10 +119,10 @@ module.exports = (server) => {
       try {
         // body requests
         // const { student_id, feedback_id, feedback_answer } = request.payload;
-        const { stu_id } = request.payload;
+        const { stu_code } = request.payload;
 
-        console.log(stu_id);
-        const responsedata = await student.StudentRepo.updatedStatusFeedback(stu_id);
+        console.log(stu_code);
+        const responsedata = await student.StudentRepo.updatedStatusFeedback(stu_code);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -136,4 +134,107 @@ module.exports = (server) => {
       }
     },
   });
+
+  // /api/v1/questions_student
+  server.route({
+    method: 'POST',
+    path: '/api/v1/questions_student',
+    config: {
+      // config for multi body request
+      payload: {
+        multipart: true,
+      },
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-width'],
+      },
+    },
+    handler: async function (request, reply) {
+      try {
+        // body requests
+        // const { student_id, feedback_id, feedback_answer } = request.payload;
+        const { stu_code } = request.payload;
+
+        console.log(stu_code);
+        const responsedata = await student.StudentRepo.getQuestionSurvey(stu_code);
+        if (responsedata.error) {
+          return responsedata.errMessage;
+        } else {
+          return responsedata;
+        }
+      } catch (err) {
+        server.log(['error', 'home'], err);
+        return err;
+      }
+    },
+  });
+
+  // /api/v1/answer_questionstudent
+  server.route({
+    method: 'POST',
+    path: '/api/v1/answer_questionstudent',
+    config: {
+      // config for multi body request
+      payload: {
+        multipart: true,
+      },
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-width'],
+      },
+    },
+    handler: async function (request, reply) {
+      try {
+        // body requests
+        // const { student_id, feedback_id, feedback_answer } = request.payload;
+        const { interest_question_id } = request.payload;
+
+        console.log('interest_question_id: ', interest_question_id);
+        const responsedata = await student.StudentRepo.getAnswerQuestionSurvey(interest_question_id);
+        if (responsedata.error) {
+          return responsedata.errMessage;
+        } else {
+          return responsedata;
+        }
+      } catch (err) {
+        server.log(['error', 'home'], err);
+        return err;
+      }
+    },
+  });
+
+  // /api/v1/student_answer
+  // server.route({
+  //   method: 'POST',
+  //   path: '/api/v1/student_answers',
+  //   config: {
+  //     // config for multi body request
+  //     payload: {
+  //       multipart: true,
+  //     },
+  //     cors: {
+  //       origin: ['*'],
+  //       additionalHeaders: ['cache-control', 'x-requested-width'],
+  //     },
+  //   },
+  //   handler: async function (request, reply) {
+  //     try {
+  //       // body requests
+  //       // const { student_id, feedback_id, feedback_answer } = request.payload;
+  //       const data = request.payload; // รับค่าจาก body ของคำขอ
+  //       const values = data.map((item) => [item.student_id, item.interest_question_id, item.ssa_answer]);
+  //       console.log(values);
+
+  //       const responsedata = await student.StudentRepo.getStudentAnswer(values);
+  //       if (responsedata.error) {
+  //         return responsedata.errMessage;
+  //       } else {
+  //         return responsedata;
+  //       }
+  //     } catch (err) {
+  //       server.log(['error', 'home'], err);
+  //       return err;
+  //     }
+  //   },
+  // });
 };
