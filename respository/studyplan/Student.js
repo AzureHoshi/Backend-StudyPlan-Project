@@ -164,6 +164,30 @@ async function insertStudentAnswer(values) {
   });
 }
 
+async function test() {
+  var Query;
+  var pool = mysql.createPool(config);
+
+  return new Promise((resolve, reject) => {
+    Query = `SELECT * FROM curriculums`;
+
+    console.log(Query);
+
+    pool.query(Query, function (error, results1, fields) {
+      if (error) {
+        return resolve(reject(error));
+      }
+      pool.end();
+      return resolve({
+        statusCode: 200,
+        returnCode: 1,
+        message: `insert Student Survey Answers successfully`,
+        data: results1,
+      });
+    });
+  });
+}
+
 module.exports.StudentRepo = {
   insertFeedback: insertFeedback,
   getStatusFeedback: getStatusFeedback,
@@ -171,4 +195,5 @@ module.exports.StudentRepo = {
   getQuestionSurvey: getQuestionSurvey,
   getAnswerQuestionSurvey: getAnswerQuestionSurvey,
   insertStudentAnswer: insertStudentAnswer,
+  test: test,
 };

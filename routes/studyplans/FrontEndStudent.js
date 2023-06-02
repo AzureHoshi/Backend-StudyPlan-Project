@@ -235,4 +235,32 @@ module.exports = (server) => {
       }
     },
   });
+
+  server.route({
+    method: 'POST',
+    path: '/api/v1/test',
+    config: {
+      // config for multi body request
+      payload: {
+        multipart: true,
+      },
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-width'],
+      },
+    },
+    handler: async function (request, reply) {
+      try {
+        const responsedata = await student.StudentRepo.test();
+        if (responsedata.error) {
+          return responsedata.errMessage;
+        } else {
+          return responsedata;
+        }
+      } catch (err) {
+        server.log(['error', 'home'], err);
+        return err;
+      }
+    },
+  });
 };

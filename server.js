@@ -15,21 +15,21 @@ const RoutesBackOfficeStudyPlans = require('./routes/studyplans/BackOfficeStudyP
 const RoutesBackOfficeSubStudy = require('./routes/studyplans/BackOfficeSubStudy');
 const FrontEndStudent = require('./routes/studyplans/FrontEndStudent');
 
-let connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '',
-  database: 'studyplan',
-  port: 3306,
-});
+// let connection = mysql.createConnection({
+//   host: '127.0.0.1',
+//   user: 'root',
+//   password: '',
+//   database: 'studyplan',
+//   port: 3306,
+// });
 
 const init = async () => {
   const server = Hapi.server({
     port: 3200,
     host: '0.0.0.0',
-    routes: {
-      cors: true,
-    },
+    // routes: {
+    //   cors: true,
+    // },
   });
 
   server.route({
