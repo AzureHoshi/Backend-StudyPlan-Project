@@ -8,6 +8,13 @@ const Joi = require('joi');
 // Create a server with a host and port
 //const server = new Hapi.Server();
 
+const RoutesBackOfficeCurriculums = require('./routes/studyplans/BackOfficeCurriculums.js');
+const RoutesBackOfficeSubjects = require('./routes/studyplans/BackOfficeSubjects.js');
+const RoutesBackOfficeRelations = require('./routes/studyplans/BackOfficeRelations');
+const RoutesBackOfficeStudyPlans = require('./routes/studyplans/BackOfficeStudyPlans');
+const RoutesBackOfficeSubStudy = require('./routes/studyplans/BackOfficeSubStudy');
+const FrontEndStudent = require('./routes/studyplans/FrontEndStudent');
+
 let connection = mysql.createConnection({
   host: '127.0.0.1',
   user: 'root',
@@ -39,8 +46,7 @@ const init = async () => {
     path: '/agents',
     handler: async function (request, reply) {
       try {
-        const responsedata =
-          await OnlineAgent.OnlineAgentRepo.getOnlineAgentByAgentCode('08840');
+        const responsedata = await OnlineAgent.OnlineAgentRepo.getOnlineAgentByAgentCode('08840');
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -53,6 +59,13 @@ const init = async () => {
       }
     },
   });
+
+  RoutesBackOfficeCurriculums(server);
+  RoutesBackOfficeSubjects(server);
+  RoutesBackOfficeRelations(server);
+  RoutesBackOfficeStudyPlans(server);
+  RoutesBackOfficeSubStudy(server);
+  FrontEndStudent(server);
 
   await server.start();
   console.log('Server running on %s', server.info.uri);
