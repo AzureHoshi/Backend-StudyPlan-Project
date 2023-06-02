@@ -2,10 +2,10 @@ const mysql = require('mysql');
 const config = require('../../dbconfig.js');
 
 var connection = mysql.createPool({
-  host: config.local.host,
-  user: config.local.user,
-  password: config.local.password,
-  database: config.local.database,
+  host: config.development.host,
+  user: config.development.user,
+  password: config.development.password,
+  database: config.development.database,
 });
 
 function SelectAll(table) {
