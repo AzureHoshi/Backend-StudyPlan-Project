@@ -253,6 +253,7 @@ module.exports = (server) => {
       try {
         const responsedata = await student.StudentRepo.test();
         if (responsedata.error) {
+          console.log(responsedata.error);
           return responsedata.errMessage;
         } else {
           return responsedata;

@@ -175,6 +175,7 @@ async function test() {
 
     pool.query(Query, function (error, results1, fields) {
       if (error) {
+        console.log(error);
         return resolve(reject(error));
       }
       pool.end();
