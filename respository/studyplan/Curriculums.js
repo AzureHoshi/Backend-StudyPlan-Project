@@ -211,10 +211,9 @@ async function getCurriculmByFaculty(faculty_id) {
   var pool = mysql.createPool(config);
 
   return new Promise((resolve, reject) => {
-    Query = `SELECT *
-    FROM ${table}
+    Query = `SELECT * FROM ${table}
     INNER JOIN faculty ON ${table}.faculty_id = faculty.faculty_id
-    WHERE curriculums.faculty_id = ${faculty_id} && ${table}.is_deleted = 0 ORDER BY faculty.created_datetime DESC;`;
+    WHERE ${table}.faculty_id = ${faculty_id} && ${table}.is_deleted = 0 ORDER BY ${table}.curriculum_year DESC`;
 
     console.log('Query1 is: ', Query);
 
