@@ -216,6 +216,7 @@ module.exports = (server) => {
         // body requests
         const { faculty_id } = request.payload;
         console.log('faculty_id: ', faculty_id);
+        console.log('payload: ', request.payload);
 
         const responsedata = await Curriculum.CurriculumsRepo.getCurriculmByFaculty(faculty_id);
         if (responsedata.error) {
