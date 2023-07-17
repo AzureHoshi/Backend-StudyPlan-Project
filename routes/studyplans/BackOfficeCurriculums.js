@@ -213,14 +213,15 @@ module.exports = (server) => {
     handler: async function (request, reply) {
       try {
         // body requests
-        // const { faculty_id } = request.payload;
-        // const responsedata = await Curriculum.CurriculumsRepo.getCurriculmByFaculty(faculty_id);
-        // if (responsedata.error) {
-        //   return responsedata.errMessage;
-        // } else {
-        //   return responsedata;
-        // }
-        return 111;
+
+        const { faculty_id } = request.payload;
+
+        const responsedata = await Curriculum.CurriculumsRepo.getCurriculmByFaculty(faculty_id);
+        if (responsedata.error) {
+          return responsedata.errMessage;
+        } else {
+          return responsedata;
+        }
       } catch (err) {
         server.log(['error', 'home'], err);
         return err;

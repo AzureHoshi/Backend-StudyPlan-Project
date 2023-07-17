@@ -207,14 +207,13 @@ async function searchCurriculums(text, column) {
 }
 
 async function getCurriculmByFaculty(faculty_id) {
-  var Query;
   var pool = mysql.createPool(config);
 
-  return new Promise((resolve, reject) => {
-    Query = `SELECT * FROM ${table}
+  var Query = `SELECT * FROM ${table}
     INNER JOIN faculty ON ${table}.faculty_id = faculty.faculty_id
     WHERE ${table}.faculty_id = ${faculty_id} && ${table}.is_deleted = 0 ORDER BY ${table}.curriculum_year DESC`;
 
+  return new Promise((resolve, reject) => {
     console.log('Query1 is: ', Query);
 
     pool.query(Query, function (error, results1, fields) {
