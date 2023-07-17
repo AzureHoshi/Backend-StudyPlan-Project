@@ -200,8 +200,9 @@ module.exports = (server) => {
   //? /api/v1/curriculum_filter_faculty
   server.route({
     method: 'POST',
-    path: '/api/v1/curriculum_BY_faculty',
+    path: '/api/v1/curriculumByFaculty',
     config: {
+      // config for multi body request
       payload: {
         multipart: true,
       },
@@ -213,11 +214,8 @@ module.exports = (server) => {
     handler: async function (request, reply) {
       try {
         // body requests
-
         const { faculty_id } = request.payload;
-        console.log('key: ', faculty_id);
-        console.log('payload: ', request.payload);
-
+        console.log('faculty_id: ', faculty_id);
         const responsedata = await Curriculum.CurriculumsRepo.getCurriculmByFaculty(faculty_id);
         if (responsedata.error) {
           return responsedata.errMessage;

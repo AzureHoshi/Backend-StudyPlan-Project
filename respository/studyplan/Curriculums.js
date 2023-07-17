@@ -206,14 +206,15 @@ async function searchCurriculums(text, column) {
   });
 }
 
-async function getCurriculmByFaculty(faculty_id) {
+// ? test
+async function getCurriculmByFaculty(id) {
   var Query;
   var pool = mysql.createPool(config);
 
   return new Promise((resolve, reject) => {
     Query = `SELECT * FROM curriculums 
     INNER JOIN faculty ON curriculums .faculty_id = faculty.faculty_id
-    WHERE curriculums .faculty_id = ${faculty_id} && curriculums .is_deleted = 0 ORDER BY curriculums .curriculum_year DESC`;
+    WHERE curriculums .faculty_id = ${id} && curriculums .is_deleted = 0 ORDER BY curriculums .curriculum_year DESC`;
 
     console.log('Query1 is: ', Query);
 
@@ -300,6 +301,7 @@ async function addNewFaculty(faculty_name_th, faculty_name_en) {
     });
   });
 }
+
 async function searchFaculty(text, column) {
   var pool = mysql.createPool(config);
 
