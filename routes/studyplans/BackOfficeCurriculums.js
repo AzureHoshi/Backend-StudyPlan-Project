@@ -1,5 +1,3 @@
-const Curriculum = require('../../respository/studyplan/Curriculums');
-
 module.exports = (server) => {
   // /api/v1/curriculum
   server.route({
