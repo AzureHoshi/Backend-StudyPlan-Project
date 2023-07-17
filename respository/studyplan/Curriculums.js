@@ -206,7 +206,7 @@ async function searchCurriculums(text, column) {
   });
 }
 
-async function getCurriculmByFaculty() {
+async function getCurriculmByFaculty(faculty_id) {
   var Query;
   var pool = mysql.createPool(config);
 
@@ -214,7 +214,7 @@ async function getCurriculmByFaculty() {
     Query = `SELECT *
     FROM ${table}
     INNER JOIN faculty ON ${table}.faculty_id = faculty.faculty_id
-    WHERE ${table}.is_deleted = 0 ORDER BY faculty.created_datetime DESC;`;
+    WHERE ${table}.is_deleted = ${faculty_id} && ORDER BY faculty.created_datetime DESC;`;
 
     console.log('Query1 is: ', Query);
 

@@ -213,7 +213,8 @@ module.exports = (server) => {
     handler: async function (request, reply) {
       try {
         // body requests
-        const responsedata = await Curriculum.CurriculumsRepo.getCurriculmByFaculty();
+        const { faculty_id } = request.payload;
+        const responsedata = await Curriculum.CurriculumsRepo.getCurriculmByFaculty(faculty_id);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
