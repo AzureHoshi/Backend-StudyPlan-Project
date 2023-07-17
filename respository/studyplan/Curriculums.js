@@ -46,6 +46,7 @@ async function getAllCurriculm() {
     });
   });
 }
+
 async function getCurriculmById(curriculumId) {
   var Query;
   var pool = mysql.createPool(config);
@@ -204,6 +205,42 @@ async function searchCurriculums(text, column) {
     });
   });
 }
+
+async function getCurriculmByFaculty() {
+  var Query;
+  var pool = mysql.createPool(config);
+
+  return new Promise((resolve, reject) => {
+    Query = `SELECT *
+    FROM ${table}
+    INNER JOIN faculty ON ${table}.faculty_id = faculty.faculty_id
+    WHERE ${table}.is_deleted = 0 ORDER BY faculty.created_datetime DESC;`;
+
+    console.log('Query1 is: ', Query);
+
+    pool.query(Query, function (error, results1, fields) {
+      if (error) {
+        return resolve(reject(error));
+      }
+      if (results1.length > 0) {
+        pool.end();
+        return resolve({
+          statusCode: 200,
+          returnCode: 1,
+          data: results1,
+        });
+      } else {
+        pool.end();
+        return resolve({
+          statusCode: 404,
+          returnCode: 11,
+          message: 'Do not have any Curriculum!',
+        });
+      }
+    });
+  });
+}
+
 async function getAllFaculty(faculty_id) {
   var Query;
   var pool = mysql.createPool(config);
@@ -348,11 +385,7 @@ async function getAllCurrentGroups(group_id) {
 
   return new Promise((resolve, reject) => {
     if (group_id != '') {
-      Query = crud.SelectById(
-        'student_cur_group',
-        'student_cur_group_id',
-        group_id
-      );
+      Query = crud.SelectById('student_cur_group', 'student_cur_group_id', group_id);
     } else {
       Query = crud.SelectAll('student_cur_group');
     }
@@ -380,12 +413,7 @@ async function getAllCurrentGroups(group_id) {
     });
   });
 }
-async function addNewGroup(
-  group_name_th,
-  group_name_en,
-  group_short_name_th,
-  group_short_name_en
-) {
+async function addNewGroup(group_name_th, group_name_en, group_short_name_th, group_short_name_en) {
   var pool = mysql.createPool(config);
   var post = {
     group_name_th: group_name_th,
@@ -441,13 +469,7 @@ async function searchGroup(text, column) {
     });
   });
 }
-async function editGroup(
-  student_cur_group_id,
-  group_name_th,
-  group_name_en,
-  group_short_name_th,
-  group_short_name_en
-) {
+async function editGroup(student_cur_group_id, group_name_th, group_name_en, group_short_name_th, group_short_name_en) {
   var pool = mysql.createPool(config);
   var post = {
     student_cur_group_id: student_cur_group_id,
@@ -461,11 +483,7 @@ async function editGroup(
   var Query;
 
   return new Promise((resolve, reject) => {
-    Query = crud.UpdateById(
-      'student_cur_group',
-      'student_cur_group_id',
-      student_cur_group_id
-    );
+    Query = crud.UpdateById('student_cur_group', 'student_cur_group_id', student_cur_group_id);
 
     pool.query(Query, post, function (error, results1, fields) {
       if (error) {
@@ -487,11 +505,7 @@ async function deleteGroup(student_cur_group_id) {
   var Query;
 
   return new Promise((resolve, reject) => {
-    Query = crud.Delete(
-      'student_cur_group',
-      'student_cur_group_id',
-      student_cur_group_id
-    );
+    Query = crud.Delete('student_cur_group', 'student_cur_group_id', student_cur_group_id);
 
     pool.query(Query, function (error, results1, fields) {
       if (error) {

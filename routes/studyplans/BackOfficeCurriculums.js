@@ -20,16 +20,14 @@ module.exports = (server) => {
         // body requests
         const { curriculum_id } = request.payload;
         if (curriculum_id != '') {
-          const responsedata =
-            await Curriculum.CurriculumsRepo.getCurriculmById(curriculum_id);
+          const responsedata = await Curriculum.CurriculumsRepo.getCurriculmById(curriculum_id);
           if (responsedata.error) {
             return responsedata.errMessage;
           } else {
             return responsedata;
           }
         } else {
-          const responsedata =
-            await Curriculum.CurriculumsRepo.getAllCurriculm();
+          const responsedata = await Curriculum.CurriculumsRepo.getAllCurriculm();
           if (responsedata.error) {
             return responsedata.errMessage;
           } else {
@@ -154,9 +152,7 @@ module.exports = (server) => {
         // body requests
         const { curriculum_id } = request.payload;
 
-        const responsedata = await Curriculum.CurriculumsRepo.deleteCurriculum(
-          curriculum_id
-        );
+        const responsedata = await Curriculum.CurriculumsRepo.deleteCurriculum(curriculum_id);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -188,10 +184,37 @@ module.exports = (server) => {
         // body requests
         const { search_text, column } = request.payload;
 
-        const responsedata = await Curriculum.CurriculumsRepo.searchCurriculums(
-          search_text,
-          column
-        );
+        const responsedata = await Curriculum.CurriculumsRepo.searchCurriculums(search_text, column);
+        if (responsedata.error) {
+          return responsedata.errMessage;
+        } else {
+          return responsedata;
+        }
+      } catch (err) {
+        server.log(['error', 'home'], err);
+        return err;
+      }
+    },
+  });
+
+  //? /api/v1/curriculum_filter_faculty
+  server.route({
+    method: 'POST',
+    path: '/api/v1/curriculum_BY_faculty',
+    config: {
+      // config for multi body request
+      payload: {
+        multipart: true,
+      },
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-width'],
+      },
+    },
+    handler: async function (request, reply) {
+      try {
+        // body requests
+        const responsedata = await Curriculum.CurriculumsRepo.getCurriculmByFaculty();
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -223,9 +246,7 @@ module.exports = (server) => {
         // body requests
         const { faculty_id } = request.payload;
 
-        const responsedata = await Curriculum.CurriculumsRepo.getAllFaculty(
-          faculty_id
-        );
+        const responsedata = await Curriculum.CurriculumsRepo.getAllFaculty(faculty_id);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -237,6 +258,7 @@ module.exports = (server) => {
       }
     },
   });
+
   // /api/v1/faculty_create
   server.route({
     method: 'POST',
@@ -256,10 +278,7 @@ module.exports = (server) => {
         // body requests
         const { faculty_name_th, faculty_name_en } = request.payload;
 
-        const responsedata = await Curriculum.CurriculumsRepo.addNewFaculty(
-          faculty_name_th,
-          faculty_name_en
-        );
+        const responsedata = await Curriculum.CurriculumsRepo.addNewFaculty(faculty_name_th, faculty_name_en);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -288,14 +307,9 @@ module.exports = (server) => {
     handler: async function (request, reply) {
       try {
         // body requests
-        const { faculty_id, faculty_name_th, faculty_name_en } =
-          request.payload;
+        const { faculty_id, faculty_name_th, faculty_name_en } = request.payload;
 
-        const responsedata = await Curriculum.CurriculumsRepo.editFaculty(
-          faculty_id,
-          faculty_name_th,
-          faculty_name_en
-        );
+        const responsedata = await Curriculum.CurriculumsRepo.editFaculty(faculty_id, faculty_name_th, faculty_name_en);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -326,9 +340,7 @@ module.exports = (server) => {
         // body requests
         const { faculty_id } = request.payload;
 
-        const responsedata = await Curriculum.CurriculumsRepo.deleteFaculty(
-          faculty_id
-        );
+        const responsedata = await Curriculum.CurriculumsRepo.deleteFaculty(faculty_id);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -359,10 +371,7 @@ module.exports = (server) => {
         // body requests
         const { search_text, column } = request.payload;
 
-        const responsedata = await Curriculum.CurriculumsRepo.searchFaculty(
-          search_text,
-          column
-        );
+        const responsedata = await Curriculum.CurriculumsRepo.searchFaculty(search_text, column);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -393,10 +402,7 @@ module.exports = (server) => {
         // body requests
         const { student_cur_group_id } = request.payload;
 
-        const responsedata =
-          await Curriculum.CurriculumsRepo.getAllCurrentGroups(
-            student_cur_group_id
-          );
+        const responsedata = await Curriculum.CurriculumsRepo.getAllCurrentGroups(student_cur_group_id);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -426,12 +432,7 @@ module.exports = (server) => {
     handler: async function (request, reply) {
       try {
         // body requests
-        const {
-          group_name_th,
-          group_name_en,
-          group_short_name_th,
-          group_short_name_en,
-        } = request.payload;
+        const { group_name_th, group_name_en, group_short_name_th, group_short_name_en } = request.payload;
 
         const responsedata = await Curriculum.CurriculumsRepo.addNewGroup(
           group_name_th,
@@ -467,13 +468,8 @@ module.exports = (server) => {
     handler: async function (request, reply) {
       try {
         // body requests
-        const {
-          student_cur_group_id,
-          group_name_th,
-          group_name_en,
-          group_short_name_th,
-          group_short_name_en,
-        } = request.payload;
+        const { student_cur_group_id, group_name_th, group_name_en, group_short_name_th, group_short_name_en } =
+          request.payload;
 
         const responsedata = await Curriculum.CurriculumsRepo.editGroup(
           student_cur_group_id,
@@ -512,9 +508,7 @@ module.exports = (server) => {
         // body requests
         const { student_cur_group_id } = request.payload;
 
-        const responsedata = await Curriculum.CurriculumsRepo.deleteGroup(
-          student_cur_group_id
-        );
+        const responsedata = await Curriculum.CurriculumsRepo.deleteGroup(student_cur_group_id);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
@@ -545,10 +539,7 @@ module.exports = (server) => {
         // body requests
         const { search_text, column } = request.payload;
 
-        const responsedata = await Curriculum.CurriculumsRepo.searchGroup(
-          search_text,
-          column
-        );
+        const responsedata = await Curriculum.CurriculumsRepo.searchGroup(search_text, column);
         if (responsedata.error) {
           return responsedata.errMessage;
         } else {
