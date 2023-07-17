@@ -29,9 +29,8 @@ function DuplicateSubjects(curriculum_id, newcurriculumn_id) {
   // WHEN ${curriculum_id}
   // THEN ${newcurriculumn_id}
   // ELSE null END curriculum_id,group_type_id,subject_code,subject_name_th,subject_name_en,credit_qty,subject_description FROM subjects WHERE is_deleted = 0 AND curriculum_id = ${curriculum_id}`;
-  var Query = `INSERT INTO subjects 
-  (curriculum_id, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description)
-  SELECT ${newcurriculumn_id}, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description
+  var Query = `INSERT INTO subjects (curriculum_id, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description, is_deleted, created_datetime)
+  SELECT ${newcurriculumn_id}, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description, is_deleted, created_datetime
   FROM subjects
   WHERE curriculum_id = ${curriculum_id}`;
   return Query;
