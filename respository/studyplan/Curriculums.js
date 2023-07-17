@@ -105,6 +105,7 @@ async function addNewCurriculum(
       if (error) {
         return resolve(reject(error));
       }
+      console.log('results1', results1);
       pool.query(crud.DuplicateSubjects(ref_curriculum_id, results1.insertId));
       pool.end();
       return resolve({
