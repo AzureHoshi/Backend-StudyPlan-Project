@@ -24,11 +24,16 @@ function Create(table) {
 
 //
 function DuplicateSubjects(curriculum_id, newcurriculumn_id) {
-  var Query = `INSERT INTO subjects (curriculum_id,group_type_id,subject_code,subject_name_th,subject_name_en,credit_qty,subject_description) 
-  SELECT CASE curriculum_id 
-  WHEN ${curriculum_id} 
-  THEN ${newcurriculumn_id} 
-  ELSE null END curriculum_id,group_type_id,subject_code,subject_name_th,subject_name_en,credit_qty,subject_description FROM subjects WHERE is_deleted = 0 AND curriculum_id = ${curriculum_id}`;
+  // var Query = `INSERT INTO subjects (curriculum_id,group_type_id,subject_code,subject_name_th,subject_name_en,credit_qty,subject_description)
+  // SELECT CASE curriculum_id
+  // WHEN ${curriculum_id}
+  // THEN ${newcurriculumn_id}
+  // ELSE null END curriculum_id,group_type_id,subject_code,subject_name_th,subject_name_en,credit_qty,subject_description FROM subjects WHERE is_deleted = 0 AND curriculum_id = ${curriculum_id}`;
+  var Query = `INSERT INTO subjects 
+  (curriculum_id, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description)
+  SELECT ${newcurriculumn_id}, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description
+  FROM subjects
+  WHERE curriculum_id = ${curriculum_id}`;
   return Query;
 }
 
