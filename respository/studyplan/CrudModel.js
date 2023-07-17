@@ -33,6 +33,7 @@ function DuplicateSubjects(curriculum_id, newcurriculumn_id) {
   SELECT ${newcurriculumn_id}, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description, is_deleted, created_datetime
   FROM subjects
   WHERE curriculum_id = ${curriculum_id}`;
+  console.log('Dup: ', Query);
   return Query;
 }
 
