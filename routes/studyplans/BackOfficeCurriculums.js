@@ -202,7 +202,6 @@ module.exports = (server) => {
     method: 'POST',
     path: '/api/v1/curriculum_BY_faculty',
     config: {
-      // config for multi body request
       payload: {
         multipart: true,
       },

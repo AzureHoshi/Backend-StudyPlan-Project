@@ -531,6 +531,7 @@ module.exports.CurriculumsRepo = {
   searchCurriculums: searchCurriculums,
   getAllFaculty: getAllFaculty,
   getAllCurrentGroups: getAllCurrentGroups,
+  getCurriculmByFaculty: getCurriculmByFaculty,
   searchFaculty: searchFaculty,
   editFaculty: editFaculty,
   deleteFaculty: deleteFaculty,
