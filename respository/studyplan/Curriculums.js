@@ -106,7 +106,7 @@ async function addNewCurriculum(
         return resolve(reject(error));
       }
       console.log('results1', results1);
-      Query1 = crud.DuplicateSubjects(ref_curriculum_id, results1.insertId);
+      Query1 = DuplicateSubjectsByCurriculum(ref_curriculum_id, results1.insertId);
       pool.query(Query1, function (error, results1, fields) {
         if (error) {
           return resolve(reject(error));
@@ -118,6 +118,7 @@ async function addNewCurriculum(
       });
       pool.end();
       return resolve({
+        Query1 = DuplicateSubjectsByCurriculum(ref_curriculum_id, results1.insertId);
         statusCode: 200,
         returnCode: 1,
         message: 'Create Curriculum Successfuly:',
