@@ -118,13 +118,14 @@ async function addNewCurriculum(
           return duplicateStatus;
         });
       }
+      console.log('test: ', duplicateStatus);
       pool.end();
       return resolve({
         statusCode: 200,
         returnCode: 1,
         message: 'Create Curriculum Successfuly:',
         id: results1.insertId,
-        duplicateStatus: duplicateStatus,
+        duplicateStatus: `${duplicateStatus}`,
       });
     });
   });
