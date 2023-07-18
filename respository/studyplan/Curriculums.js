@@ -109,23 +109,17 @@ async function addNewCurriculum(
       console.log('results1', results1);
       if (ref_curriculum_id.length > 0) {
         Query1 = DuplicateSubjectsByCurriculum(ref_curriculum_id, results1.insertId);
-        pool.query(Query1, function (err, results) {
-          if (err) {
-            console.log('ere');
-            duplicateStatus = 'dup fal';
-            return duplicateStatus;
-          }
-          console.log('sus');
-          duplicateStatus = 'dup ins';
-          return duplicateStatus;
-        });
+        pool.query(Query1);
+        duplicateStatus = 'duplicate Successfully';
+      } else {
+        duplicateStatus = 'not have duplicate';
       }
       console.log('test: ', duplicateStatus);
       pool.end();
       return resolve({
         statusCode: 200,
         returnCode: 1,
-        message: 'Create Curriculum Successfuly:',
+        message: 'Create Curriculum Successfully:',
         id: results1.insertId,
         duplicateStatus: `${duplicateStatus}`,
       });
