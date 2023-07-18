@@ -107,14 +107,6 @@ async function addNewCurriculum(
       }
       console.log('results1', results1);
       Query1 = DuplicateSubjectsByCurriculum(ref_curriculum_id, results1.insertId);
-      console.log('Query1: ', Query1);
-      pool.query(Query1, function (error, results1, fields) {
-        if (error) {
-          console.log('err1');
-          return resolve(reject(error));
-        }
-      });
-      Query1 = DuplicateSubjectsByCurriculum(ref_curriculum_id, results1.insertId);
       pool.query(Query1, function (err, results) {
         if (err) {
           console.log('err2');
