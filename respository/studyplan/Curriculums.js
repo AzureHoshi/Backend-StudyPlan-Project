@@ -124,7 +124,7 @@ async function addNewCurriculum(
         returnCode: 1,
         message: 'Create Curriculum Successfuly:',
         id: results1.insertId,
-        duplicateStatus: duplicateStatus,
+        duplicateStatus: `${duplicateStatus}`,
       });
     });
   });
