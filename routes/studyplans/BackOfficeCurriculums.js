@@ -231,6 +231,42 @@ module.exports = (server) => {
     },
   });
 
+  //? /api/v1/duplicateSubjectsCurriculum
+  server.route({
+    method: 'POST',
+    path: '/api/v1/duplicateSubCur',
+    config: {
+      // config for multi body request
+      payload: {
+        multipart: true,
+      },
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'x-requested-width'],
+      },
+    },
+    handler: async function (request, reply) {
+      try {
+        // body requests
+        const { curriculum_id, newCurriculum_id } = request.payload;
+        console.log('payload: ', request.payload);
+
+        const responsedata = await Curriculum.CurriculumsRepo.DuplicateSubjectsByCurriculum(
+          curriculum_id,
+          newCurriculum_id
+        );
+        if (responsedata.error) {
+          return responsedata.errMessage;
+        } else {
+          return responsedata;
+        }
+      } catch (err) {
+        server.log(['error', 'home'], err);
+        return err;
+      }
+    },
+  });
+
   // /api/v1/faculty
   server.route({
     method: 'POST',
