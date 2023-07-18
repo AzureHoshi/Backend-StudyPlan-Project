@@ -106,23 +106,26 @@ async function addNewCurriculum(
         return resolve(reject(error));
       }
       console.log('results1', results1);
-      Query1 = DuplicateSubjectsByCurriculum(ref_curriculum_id, results1.insertId);
-      pool.query(Query1, function (err, results) {
-        if (err) {
-          console.log('err2');
-          return resolve(reject(error));
-        }
-        return resolve({
-          statusCode: 200,
-          message: 'duplicate Subjects by Curriculum Successfully',
+      if (ref_curriculum_id.length > 0) {
+        Query1 = DuplicateSubjectsByCurriculum(ref_curriculum_id, results1.insertId);
+        pool.query(Query1, function (err, results) {
+          if (err) {
+            console.log('err2');
+            return resolve(reject(error));
+          }
+          return resolve({
+            statusCode: 200,
+            message: 'duplicate Subjects by Curriculum Successfully',
+          });
         });
-      });
+      }
       pool.end();
       return resolve({
         statusCode: 200,
         returnCode: 1,
         message: 'Create Curriculum Successfuly:',
         id: results1.insertId,
+        duplicateStatus: false,
       });
     });
   });
