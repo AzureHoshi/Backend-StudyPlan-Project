@@ -114,13 +114,7 @@ async function addNewCurriculum(
             console.log('err2');
             return resolve(reject(error));
           }
-          return (
-            resolve({
-              statusCode: 200,
-              message: 'duplicate Subjects by Curriculum Successfully',
-            }),
-            (duplicateStatus = true)
-          );
+          return (duplicateStatus = true);
         });
       }
       duplicateStatus = false;
