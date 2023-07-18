@@ -118,7 +118,6 @@ async function addNewCurriculum(
           resolve();
         });
       }
-      duplicateStatus = false;
       pool.end();
       return resolve({
         statusCode: 200,
