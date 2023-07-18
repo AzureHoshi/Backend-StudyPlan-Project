@@ -122,6 +122,8 @@ async function addNewCurriculum(
             (duplicateStatus = 'true')
           );
         });
+      } else {
+        duplicateStatus = 'false';
       }
       pool.end();
       return resolve({
