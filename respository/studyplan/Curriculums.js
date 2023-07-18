@@ -106,7 +106,16 @@ async function addNewCurriculum(
         return resolve(reject(error));
       }
       console.log('results1', results1);
-      // pool.query(crud.DuplicateSubjects(ref_curriculum_id, results1.insertId));
+      Query1 = crud.DuplicateSubjects(ref_curriculum_id, results1.insertId);
+      pool.query(Query1, function (error, results1, fields) {
+        if (error) {
+          return resolve(reject(error));
+        }
+        return resolve({
+          statusCode: 200,
+          message: 'duplicate Subjects by Curriculum Successfully',
+        });
+      });
       pool.end();
       return resolve({
         statusCode: 200,
@@ -114,7 +123,6 @@ async function addNewCurriculum(
         message: 'Create Curriculum Successfuly:',
         id: results1.insertId,
       });
-      pool.query(crud.DuplicateSubjects(ref_curriculum_id, results1.insertId));
     });
   });
 }
