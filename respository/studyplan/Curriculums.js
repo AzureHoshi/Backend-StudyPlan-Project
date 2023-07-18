@@ -111,9 +111,11 @@ async function addNewCurriculum(
         Query1 = DuplicateSubjectsByCurriculum(ref_curriculum_id, results1.insertId);
         pool.query(Query1, function (err, results) {
           if (err) {
+            console.log('ere');
             duplicateStatus = 'dup fal';
             return duplicateStatus;
           }
+          console.log('sus');
           duplicateStatus = 'dup ins';
           return duplicateStatus;
         });
