@@ -110,6 +110,7 @@ async function addNewCurriculum(
       pool.query(Query1, function (err, results) {
         if (err) {
           console.log('err2');
+          return resolve(reject(error));
         }
         return resolve({
           statusCode: 200,
