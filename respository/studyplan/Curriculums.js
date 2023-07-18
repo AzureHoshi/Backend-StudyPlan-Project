@@ -98,6 +98,7 @@ async function addNewCurriculum(
   console.log('post is: ', post);
 
   var Query;
+  var duplicateStatus;
 
   return new Promise((resolve, reject) => {
     Query = crud.Create(table);
@@ -113,19 +114,23 @@ async function addNewCurriculum(
             console.log('err2');
             return resolve(reject(error));
           }
-          return resolve({
-            statusCode: 200,
-            message: 'duplicate Subjects by Curriculum Successfully',
-          });
+          return (
+            resolve({
+              statusCode: 200,
+              message: 'duplicate Subjects by Curriculum Successfully',
+            }),
+            (duplicateStatus = true)
+          );
         });
       }
+      duplicateStatus = false;
       pool.end();
       return resolve({
         statusCode: 200,
         returnCode: 1,
         message: 'Create Curriculum Successfuly:',
         id: results1.insertId,
-        duplicateStatus: false,
+        duplicateStatus: duplicateStatus,
       });
     });
   });
