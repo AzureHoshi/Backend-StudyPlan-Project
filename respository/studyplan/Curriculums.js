@@ -79,6 +79,8 @@ async function getCurriculmById(curriculumId) {
     });
   });
 }
+
+// ? เพิ่ม Curriculum ถ้ามี ref_id ให้ทำการ duplication subject ที่อยู่ใน Curriculum นั้นด้วย
 async function addNewCurriculum(
   student_cur_group_id,
   faculty_id,
@@ -114,7 +116,6 @@ async function addNewCurriculum(
       } else {
         duplicateStatus = 'not have duplicate';
       }
-      console.log('test: ', duplicateStatus);
       pool.end();
       return resolve({
         statusCode: 200,
