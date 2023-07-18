@@ -209,43 +209,7 @@ async function searchCurriculums(text, column) {
 }
 
 // ? test
-async function getCurriculmByFaculty(curriculum_id, newCurriculum_id) {
-  var Query;
-  var pool = mysql.createPool(config);
-
-  return new Promise((resolve, reject) => {
-    Query = `INSERT INTO subjects (curriculum_id, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description, is_deleted, created_datetime)
-  SELECT ${newCurriculum_id}, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description, is_deleted, created_datetime
-  FROM subjects
-  WHERE curriculum_id = ${curriculum_id}`;
-
-    console.log('Query1 is: ', Query);
-
-    pool.query(Query, function (error, results1, fields) {
-      if (error) {
-        return resolve(reject(error));
-      }
-      if (results1.length > 0) {
-        pool.end();
-        return resolve({
-          statusCode: 200,
-          returnCode: 1,
-          data: results1,
-        });
-      } else {
-        pool.end();
-        return resolve({
-          statusCode: 404,
-          returnCode: 11,
-          message: 'Do not Something!',
-        });
-      }
-    });
-  });
-}
-
-// ? /api/v1/duplicateSubjectsCurriculum
-async function DuplicateSubjectsByCurriculum(id) {
+async function getCurriculmByFaculty(id) {
   var Query;
   var pool = mysql.createPool(config);
 
@@ -273,6 +237,42 @@ async function DuplicateSubjectsByCurriculum(id) {
           statusCode: 404,
           returnCode: 11,
           message: 'Do not have any Curriculum!',
+        });
+      }
+    });
+  });
+}
+
+// ? /api/v1/duplicateSubjectsCurriculum
+async function DuplicateSubjectsByCurriculum(curriculum_id, newcurriculumn_id) {
+  var Query;
+  var pool = mysql.createPool(config);
+
+  return new Promise((resolve, reject) => {
+    Query = `INSERT INTO subjects (curriculum_id, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description, is_deleted, created_datetime)
+  SELECT ${newcurriculumn_id}, group_type_id, subject_code, subject_name_th, subject_name_en, credit_qty, subject_description, is_deleted, created_datetime
+  FROM subjects
+  WHERE curriculum_id = ${curriculum_id}`;
+
+    console.log('Query1 is: ', Query);
+
+    pool.query(Query, function (error, results1, fields) {
+      if (error) {
+        return resolve(reject(error));
+      }
+      if (results1.length > 0) {
+        pool.end();
+        return resolve({
+          statusCode: 200,
+          returnCode: 1,
+          data: results1,
+        });
+      } else {
+        pool.end();
+        return resolve({
+          statusCode: 404,
+          returnCode: 11,
+          message: 'Do not Something',
         });
       }
     });
