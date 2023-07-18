@@ -116,8 +116,10 @@ async function addNewCurriculum(
           }
           return (duplicateStatus = true);
         });
+      } else {
+        duplicateStatus = false;
       }
-      duplicateStatus = false;
+
       pool.end();
       return resolve({
         statusCode: 200,
